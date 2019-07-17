@@ -1,1 +1,57 @@
-/* style */
+*{
+    width: 100%;
+    margin: 0 auto;
+}
+#add-manager {
+    display: flex;
+    flex-flow: row wrap;
+    background-color: midnightblue;
+    color:white;
+    padding: 20px;
+}
+/* #add-manager h1 {
+    justify-content: center;
+} */
+ 
+#add-panel {
+    display: inline-block;
+} 
+
+
+li {
+    display: inline;
+}
+#to-do-list {
+    background-color: dodgerblue;
+} 
+
+#to-do-list ul {
+    list-style-type: none;
+    padding: 15px;
+}
+#to-do-list li {
+    display:flex;
+    flex-direction: row;
+    background-color: gray;
+    color:white;
+    font-weight: bold;
+    padding: 15px;
+}
+button {
+    background-color: #e7e7e7;
+    border: none;
+    color:black;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.done-icon{
+    display:none;
+    color:green;
+    font-weight: bold;
+}

@@ -1,12 +1,52 @@
 <!DOCTYPE html>
-<html lang="pl_PLs">
+<html lang="pl_PL">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <link rel="stylesheet"  href="style.css">
+    <title>My To Do List</title>
 </head>
 <body>
-    
+    <script src="script.js"></script>
+    <div id="add-manager">
+        <h1>
+            My to Do List
+        </h1>
+        <div id="add-panel">
+            <input id="input-text" placeholder="Title..."></input>
+            <button id="add-task">Add</button>
+        </div>
+   </div>
+
+   <div id="to-do-list">
+        <ul id="list">
+            <li>
+                <label>Zadanie 1</label>
+                <button class= "delete-button">Delete</button>
+                <button class= "edit-button">Edit</button>
+                <button class= "mark-button">Mark as Done</button>
+                <span class="done-icon">DONE!</span>
+            </li> 
+
+            <li>
+                <label>Zadanie 2</label>
+                <button class= "delete-button">Delete</button>
+                <button class= "edit-button">Edit</button>
+                <button class= "mark-button">Mark as Done</button>
+                <span class="done-icon">DONE!</span>
+            </li> 
+
+            <li>
+                <label>Zadanie 3</label>
+                <button class= "delete-button">Delete</button>
+                <button class= "edit-button">Edit</button>
+                <button class= "mark-button">Mark as Done</button>
+                <span class="done-icon">DONE!</span>
+            </li> 
+
+            
+        </ul>
+   </div>
 </body>
 </html>
