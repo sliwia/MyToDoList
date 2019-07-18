@@ -18,35 +18,41 @@
             <button id="add-task">Add</button>
         </div>
    </div>
-
-   <div id="to-do-list">
+   <div id="edit-dialog">
+        <div class="edit-form">
+            <input id="edit-input"></input>
+            <button id="save">Save</button>
+            <button id="close">&times;</buton>  
+        </div>
+    </div>
+    
+    <div id="to-do-list">
         <ul id="list">
-            <li>
-                <label>Zadanie 1</label>
+            <li id="0">
+                <label class="task-text">Zadanie 1</label>
                 <button class= "delete-button">Delete</button>
                 <button class= "edit-button">Edit</button>
                 <button class= "mark-button">Mark as Done</button>
                 <span class="done-icon">DONE!</span>
             </li> 
 
-            <li>
-                <label>Zadanie 2</label>
+            <li id="1">
+                <label class="task-text">Zadanie 2</label>
                 <button class= "delete-button">Delete</button>
                 <button class= "edit-button">Edit</button>
                 <button class= "mark-button">Mark as Done</button>
                 <span class="done-icon">DONE!</span>
             </li> 
 
-            <li>
-                <label>Zadanie 3</label>
+            <li id="2">
+                <label class="task-text">Zadanie 3</label>
                 <button class= "delete-button">Delete</button>
                 <button class= "edit-button">Edit</button>
                 <button class= "mark-button">Mark as Done</button>
                 <span class="done-icon">DONE!</span>
             </li> 
-
             
         </ul>
-   </div>
+    </div>
 </body>
 </html>
