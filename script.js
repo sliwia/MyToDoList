@@ -1,6 +1,8 @@
-var toDoList ;
+let $toDoList;
+var initialToDoList =[];
 var newTask;
 var addTaskButton;
+var clearTaskButton;
 var editDialog;
 var saveButton;
 var closeButton;
@@ -9,55 +11,59 @@ var editText;
 var editInput;
 
 function main() {
-    searchForElements()
-    prepareDOMEvents()
+    searchForElements();
+    prepareInitialList();
+    prepareDOMEvents();
 }
 
 function searchForElements() {
-    toDoList = document.getElementById('list');
+    $toDoList = document.getElementById('list');
     newTask = document.getElementById("input-text");
     addTaskButton = document.getElementById('add-task');
+    clearTaskButton = document.getElementById('clear-text');
     editDialog = document.getElementById("edit-dialog");
-    editInput = document.getElementById("edit-input")
-    saveButton = document.getElementById("save")
+    editInput = document.getElementById("edit-input");
+    saveButton = document.getElementById("save");
     closeButton = document.getElementById("close");
 };
 
 function prepareDOMEvents() {
-    toDoList.addEventListener('click', listClickManager);
-    addTaskButton.addEventListener('click', addTask);
-    saveButton.addEventListener('click', addEditTask)
+    $toDoList.addEventListener('click', listClickManager);
+    addTaskButton.addEventListener('click', addNewElementToList);
+    clearTaskButton.addEventListener('click',clearTextInput);
+    saveButton.addEventListener('click', addEditTask);
     closeButton.addEventListener('click', closeDialog);
 }
 
-function validateInput(task) {
-    if (task == "") {
-      alert("Field (title..) is empty!");
-      return false;
-    }
-  }
-
-function countId (){
-    var allElementsArray = [];
-    var allElements = document.getElementsByTagName('li');
-    for(var i = 0; i < allElements.length; i++) {
-        allElementsArray.push(Number(allElements[i].id));
-    }
-    var maxId = Math.max(...allElementsArray)
-    return maxId+1;
+function prepareInitialList(){
+    initialToDoList.forEach((todo,index) => {
+        addElementToList(todo,index);
+    });
 }
-function addTask() {
-    newId = countId()
-    var titleTask = newTask.value;
 
+function addElementToList(titleElement, index){
+    addNewTask(titleElement, index);
+}
+
+function addNewElementToList(){
+    const idTask = initialToDoList.length + 1;
+    addNewTask(newTask.value, idTask);
+}
+
+function addNewTask(titleTask,idTask) {
     if(validateInput(titleTask) !== false) {
         var newElement = document.createElement('li');
-        newElement.id = newId.toString();
+        newElement.id = idTask.toString();
         
         var newLabel = document.createElement('label');
         newLabel.classList.add("task-text");
         newLabel.innerText = titleTask;
         newElement.appendChild(newLabel);
+
+        var newMarkSpan = document.createElement('span');
+        newMarkSpan.classList.add("done-icon");
+        newMarkSpan.innerText = 'DONE!';
+        newElement.appendChild(newMarkSpan);
         
         var newDelButton = document.createElement('button');
         newDelButton.classList.add("delete-button");
@@ -74,39 +80,36 @@ function addTask() {
         newMarkButton.innerText = 'Mark as Done';
         newElement.appendChild(newMarkButton);
 
-        var newMarkSpan = document.createElement('span');
-        newMarkSpan.classList.add("done-icon");
-        newMarkSpan.innerText = 'DONE!';
-        newElement.appendChild(newMarkSpan);
-
-        toDoList.appendChild(newElement);
+        $toDoList.appendChild(newElement);
     }
+}
+
+function validateInput(task) {
+    if (task == "") {
+      alert("Field (title..) is empty!");
+      return false;
+    }
+}
+
+function clearTextInput(){
+    newTask.value = '';
 }
 
 function listClickManager(eventObject) {
     var target = eventObject.target;
     var parent = target.parentElement;
-    var id_element = target.id;
-    console.log(id_element)
+    //var id_element = target.id;
     var target_class = target.className;
-    //console.log('target_class',target_class)
+    //console.log(target_class,target_class)
     if (target_class==='delete-button'){
         parent.remove();
     } else if (target_class==='mark-button'){
         insert_check(parent);
     } else if (target_class==='edit-button'){
-        showDialog(parent)
+        showDialog(parent);
     }
 }   
 
-function insert_check(elementList){
-    var markSpan = elementList.getElementsByClassName("done-icon")[0];
-    if (markSpan.style.display === 'none') {
-        markSpan.style.display = 'block';
-    } else {
-        markSpan.style.display = 'none';
-    }
-}
 function showDialog(elementList) {
     editId = elementList.id;
     editText = elementList.getElementsByClassName("task-text")[0].innerText;
@@ -115,7 +118,7 @@ function showDialog(elementList) {
 }
 
 function addEditTask(){
-    var activeElement = document.getElementById(editId)
+    var activeElement = document.getElementById(editId);
     var activeLabel = activeElement.getElementsByClassName("task-text")[0];
     activeLabel.innerText = editInput.value;
     editDialog.style.display = "none";
@@ -125,4 +128,14 @@ function closeDialog() {
     editDialog.style.display = "none";
 }
 
+function insert_check(elementList){ 
+    var markSpan = elementList.getElementsByClassName("done-icon")[0];
+    //console.log(markSpan);
+    //console.log('markSpan.style.color',markSpan.style.color);
+    if (markSpan.style.color === 'gray') {
+        markSpan.style.color = 'green';
+    } else {
+        markSpan.style.color = 'gray';
+    }
+}
 document.addEventListener('DOMContentLoaded', main);

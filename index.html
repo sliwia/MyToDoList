@@ -5,17 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet"  href="style.css">
+    <link rel="stylesheet"  href="reset.css">
     <title>My To Do List</title>
 </head>
 <body>
     <script src="script.js"></script>
+    
     <div id="add-manager">
-        <h1>
-            My to Do List
-        </h1>
+        <div>
+            <h1>
+                My to Do List
+            </h1>
+        </div>
+        
         <div id="add-panel">
             <input id="input-text" placeholder="Title..."></input>
             <button id="add-task">Add</button>
+            <button id="clear-text">Clear</button>
         </div>
    </div>
    <div id="edit-dialog">
@@ -27,31 +33,7 @@
     </div>
     
     <div id="to-do-list">
-        <ul id="list">
-            <li id="0">
-                <label class="task-text">Zadanie 1</label>
-                <button class= "delete-button">Delete</button>
-                <button class= "edit-button">Edit</button>
-                <button class= "mark-button">Mark as Done</button>
-                <span class="done-icon">DONE!</span>
-            </li> 
-
-            <li id="1">
-                <label class="task-text">Zadanie 2</label>
-                <button class= "delete-button">Delete</button>
-                <button class= "edit-button">Edit</button>
-                <button class= "mark-button">Mark as Done</button>
-                <span class="done-icon">DONE!</span>
-            </li> 
-
-            <li id="2">
-                <label class="task-text">Zadanie 3</label>
-                <button class= "delete-button">Delete</button>
-                <button class= "edit-button">Edit</button>
-                <button class= "mark-button">Mark as Done</button>
-                <span class="done-icon">DONE!</span>
-            </li> 
-            
+        <ul id="list">   
         </ul>
     </div>
 </body>
