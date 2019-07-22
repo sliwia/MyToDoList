@@ -1,5 +1,5 @@
 let $toDoList;
-var initialToDoList =[];
+var initialToDoList =['Zadanie 1', 'Zadanie 2'];
 var newTask;
 var addTaskButton;
 var clearTaskButton;
