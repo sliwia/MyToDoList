@@ -99,7 +99,8 @@ button:hover {
 }
 
 .done-icon{
-    color:gray;
+    visibility: hidden;
+    color:green;
     font-weight: bold;
     margin-right: 5px;
 s
