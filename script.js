@@ -5,7 +5,6 @@ var clearTaskButton;
 var editDialog;
 var saveButton;
 var closeButton;
-var delId;
 var editId;
 var editText;
 var editInput;
@@ -28,22 +27,14 @@ async function getInitialToDoList(){
     */
     try{
         var toDoListFromApi = await axios.get('http://195.181.210.249:3000/todo/');
+        toDoListFromApi.data.filter(toDo => {
+            return toDo.author==authorName;
+        }).forEach((toDo) => {
+            addNewTask(toDo.title, toDo.id, toDo.extra);
+        });
     }catch(err) {
         console.log(err);
     }
-    
-    var toDoListFromApiData = toDoListFromApi.data;
-    var filterToDoList = toDoListFromApiData.filter(toDo => {
-        return toDo.author==authorName;
-    })
-
-    filterToDoList.forEach((toDo) => {
-        addNewTask(toDo.title, toDo.id);
-        if (toDo.extra == 'done'){
-            var activeToDo = document.getElementById(toDo.id).getElementsByClassName("done-icon")[0];
-            activeToDo.style.visibility = "visible"; 
-        }
-    });
 }
 
 function searchForElements() {
@@ -88,21 +79,24 @@ async function addNewElementToList(){
         } catch(err) {
             console.log(err);
         }
+        
         try{
             var toDoListFromApi = await axios.get('http://195.181.210.249:3000/todo/');
+            var maxIdToDo = toDoListFromApi.data[toDoListFromApi.data.length - 1].id;
+            var toDoExtra = null;
+            addNewTask(newTask.value, maxIdToDo,toDoExtra);
         } catch(err) {
             console.log(err);
         }
-        var maxIdToDo = toDoListFromApi.data[toDoListFromApi.data.length - 1].id;
-        addNewTask(newTask.value, maxIdToDo);
     }
 }
     
-function addNewTask(titleTask, idTask) {
+function addNewTask(titleTask, idTask, toDoExtra) {
     /* 
         Funkcja tworzca nowe todo, tworzy pojedyczy element w html.
         @param  titleTask       tytuł nowwego ToDo
         @param  idTask          id nowego todo
+        @param  toDoExtra       wartość extra todo
     */
     
     var newElement = document.createElement('li');
@@ -116,6 +110,9 @@ function addNewTask(titleTask, idTask) {
     var newMarkSpan = document.createElement('span');
     newMarkSpan.classList.add("done-icon");
     newMarkSpan.innerText = 'DONE!';
+    if (toDoExtra == 'done'){
+        newMarkSpan.style.visibility = "visible"; 
+    }
     newElement.appendChild(newMarkSpan);
     
     var newDelButton = document.createElement('button');
@@ -178,14 +175,14 @@ async function deleteTask(elementList){
        Funkcja usuwająca todo z htmla i z API.
        @param  elementList          todo w formie html
    */
-    delId = elementList.id;
     try{
-        var delUrl = "http://195.181.210.249:3000/todo/" + delId;
+        var delUrl = "http://195.181.210.249:3000/todo/" + elementList.id;
+        await axios.delete(delUrl)
+        elementList.remove();
     } catch(err) {
         console.log(err);
     }
-   await axios.delete(delUrl)
-   elementList.remove();
+   
 }
 
 async function insertCheck(elementList){ 
@@ -196,28 +193,23 @@ async function insertCheck(elementList){
        @param  elementList          todo w formie html
    */
     var markSpan = elementList.getElementsByClassName("done-icon")[0];
-    //var markId = elementList.id; pytanie: czy id zapisać do zmiennej czy może być odwołanie się do niej od razu
+    var extraValueToSend;
     if (markSpan.style.visibility==="visible"){
         markSpan.style.visibility = "hidden";
-        try{
-            await axios.put('http://195.181.210.249:3000/todo/' + elementList.id, {
-            extra: null,
-            });
-        } catch(err) {
-            console.log(err);
-        }
+        extraValueToSend  = null;
         
     } else{
         markSpan.style.visibility = "visible"; 
-        try{
-            await axios.put('http://195.181.210.249:3000/todo/' + elementList.id, {
-            extra: 'done',
-            });
-        } catch(err) {
-            console.log(err);
-        }
-        
+        extraValueToSend  = 'done';
     }
+    try{
+        await axios.put('http://195.181.210.249:3000/todo/' + elementList.id, {
+        extra: extraValueToSend,
+        });
+    } catch(err) {
+        console.log(err);
+    }
+
 }
 
 function showDialog(elementList) {
